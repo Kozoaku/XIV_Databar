@@ -277,6 +277,7 @@ function MenuModule:CreateFrames()
     end
   end
 
+--@non-retail@
   if mm.lfg then
     self.frames.lfg = CreateFrame("BUTTON", "lfg", parentFrame)
     parentFrame = self.frames.lfg
@@ -312,6 +313,7 @@ function MenuModule:CreateFrames()
       self.frames.pet = nil
     end
   end
+--@end-non-retail@
 
   if mm.shop then
     self.frames.shop = CreateFrame("BUTTON", "shop", parentFrame)
@@ -850,6 +852,7 @@ function MenuModule:CreateClickFunctions()
   	end
   end; --talent
 
+--@non-retail@
   self.functions.journal = function(self, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
@@ -870,6 +873,7 @@ function MenuModule:CreateClickFunctions()
   		ToggleCollectionsJournal()
   	end
   end; --pet
+--@end-non-retail@
 
   self.functions.ach = function(self, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
@@ -885,12 +889,14 @@ function MenuModule:CreateClickFunctions()
   	end
   end; --quest
 
+  --@non-retail@
   self.functions.pvp = function(self, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
   		TogglePVPUI()
   	end
   end; --pvp
+  --@end-non-retail@
 
   self.functions.shop = function(self, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
@@ -1111,6 +1117,7 @@ function MenuModule:GetConfig()
             get = function() return xb.db.profile.modules.microMenu.quest; end,
             set = function(_, val) xb.db.profile.modules.microMenu.quest = val; self:UpdateMenu(); self:Refresh(); end
           },
+          --@non-retail@
           lfg = {
             name = L['Show LFG Button'],
             order = 10,
@@ -1139,6 +1146,7 @@ function MenuModule:GetConfig()
             get = function() return xb.db.profile.modules.microMenu.pet; end,
             set = function(_, val) xb.db.profile.modules.microMenu.pet = val; self:UpdateMenu(); self:Refresh(); end
           },
+          --@end-non-retail@
           shop = {
             name = L['Show Shop Button'],
             order = 14,
