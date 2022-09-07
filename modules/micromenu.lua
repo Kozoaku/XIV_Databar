@@ -295,6 +295,7 @@ function MenuModule:CreateFrames()
       self.frames.journal = nil
     end
   end
+--@end-non-retail@
 
   if mm.pvp then
     self.frames.pvp = CreateFrame("BUTTON", "pvp", parentFrame)
@@ -305,6 +306,7 @@ function MenuModule:CreateFrames()
     end
   end
 
+--@non-retail@
   if mm.pet then
     self.frames.pet = CreateFrame("BUTTON", "pet", parentFrame)
     parentFrame = self.frames.pet
@@ -1132,6 +1134,7 @@ function MenuModule:GetConfig()
             get = function() return xb.db.profile.modules.microMenu.journal; end,
             set = function(_, val) xb.db.profile.modules.microMenu.journal = val; self:UpdateMenu(); self:Refresh(); end
           },
+          --@end-non-retail@
           pvp = {
             name = L['Show PVP Button'],
             order = 12,
@@ -1139,6 +1142,7 @@ function MenuModule:GetConfig()
             get = function() return xb.db.profile.modules.microMenu.pvp; end,
             set = function(_, val) xb.db.profile.modules.microMenu.pvp = val; self:UpdateMenu(); self:Refresh(); end
           },
+          --@non-retail@
           pet = {
             name = L['Show Pets Button'],
             order = 13,
