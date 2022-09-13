@@ -1,7 +1,5 @@
 package-as: XIV_Databar
 
-enable-nolib-creation: no
-
 externals:
   Libs/LibStub: https://repos.curseforge.com/wow/libstub/trunk
   Libs/CallbackHandler-1.0: https://repos.curseforge.com/wow/callbackhandler/trunk/CallbackHandler-1.0
@@ -18,9 +16,6 @@ externals:
   Libs/AceLocale-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceLocale-3.0
   Libs/LibQTip-1.0: https://repos.curseforge.com/wow/libqtip-1-0
   Libs/LibSharedMedia-3.0: https://repos.curseforge.com/wow/libsharedmedia-3-0/trunk/LibSharedMedia-3.0
-
-tools-used:
-  - libdatabroker-1.1
 
 ignore:
   - README.md
