@@ -1,5 +1,5 @@
 -- Get the addon name and namespace from the client
-local AddonName, XIV_Databar = ...;
+local addonname, ns = ...;
 
 -- Create a local version of the WoW global environment
 local _G = _G;
@@ -8,99 +8,36 @@ local _G = _G;
 local pairs, unpack, select = pairs, unpack, select;
 
 -- Get the needed libraries
-local LibStub = LibStub;
-local AceAddon = LibStub:GetLibrary("AceAddon-3.0"); ---@type AceAddon-3.0
-local AceLocale = LibStub:GetLibrary("AceLocale-3.0"); ---@type AceLocale-3.0
+local LibStub        = LibStub;
+
+local AceAddon       = LibStub:GetLibrary("AceAddon-3.0"); ---@type AceAddon-3.0
+local AceLocale      = LibStub:GetLibrary("AceLocale-3.0"); ---@type AceLocale-3.0
+local AceDB          = LibStub:GetLibrary("AceDB-3.0"); ---@type AceDB-3.0
+
+local LibSharedMedia = LibStub:GetLibrary("LibSharedMedia-3.0");
+local LibDataBroker  = LibStub:GetLibrary("LibDataBroker-1.1"); ---@type LibDataBroker-1.1
 
 -- Create the addon
-AceAddon:NewAddon(XIV_Databar, AddonName, "AceConsole-3.0", "AceEvent-3.0");
-local L = AceLocale:GetLocale(AddonName, true); ---@type XIV_DatabarLocale
+local XIV_Databar = AceAddon:NewAddon(addonname, "AceConsole-3.0", "AceEvent-3.0"); ---@class XIV_Databar : AceAddon, AceConsole-3.0, AceEvent-3.0
+local L = AceLocale:GetLocale(addonname, true); ---@type XIV_DatabarLocale
 
-
---[[  NOT REFACTORED BELOW THIS COMMENT  ]]--
-
-
-local ldb = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject(AddonName, {
+-- Create a launch button
+local ldb = LibDataBroker:NewDataObject(addonname, {
     type = "launcher",
     icon = "Interface\\Icons\\Spell_Nature_StormReach",
     OnClick = function(clickedframe, button)
-        XIV_Databar:ToggleConfig()
+        XIV_Databar:ToggleConfig();
     end,
 })
 
-XIV_Databar.L = L
 
-XIV_Databar.constants = {
-    mediaPath = "Interface\\AddOns\\"..AddonName.."\\media\\",
-    playerName = UnitName("player"),
-    playerClass = select(2, UnitClass("player")),
-    playerLevel = UnitLevel("player"),
-    playerFactionLocal = select(2, UnitFactionGroup("player")),
-    playerRealm = GetRealmName(),
-    popupPadding = 10,
-}
-
-XIV_Databar.defaults = {
-    profile = {
-        general = {
-            barPosition = "BOTTOM",
-            barPadding = 3,
-            moduleSpacing = 30,
-            barFullscreen = true,
-            barWidth = GetScreenWidth(),
-            barHoriz = 'CENTER',
-			barCombatHide = false,
-            barFlightHide = false,
-            useElvUI = true,
-        },
-        color = {
-            barColor = {
-                r = 0.094,
-                g = 0.094,
-                b = 0.094,
-                a = 0.75
-            },
-            normal = {
-                r = 0.8,
-                g = 0.8,
-                b = 0.8,
-                a = 0.75
-            },
-            inactive = {
-                r = 1,
-                g = 1,
-                b = 1,
-                a = 0.25
-            },
-            useCC = false,
-			useTextCC = false,
-            useHoverCC = true,
-            hover = {
-				r = RAID_CLASS_COLORS[XIV_Databar.constants.playerClass].r,
-				g = RAID_CLASS_COLORS[XIV_Databar.constants.playerClass].g,
-				b = RAID_CLASS_COLORS[XIV_Databar.constants.playerClass].b,
-				a = RAID_CLASS_COLORS[XIV_Databar.constants.playerClass].a
-			}
-        },
-        text = {
-            fontSize = 12,
-            smallFontSize = 11,
-            font =  'Homizio Bold'
-        },
-        modules = {
-
-        }
-    }
-};
-
-XIV_Databar.LSM = LibStub('LibSharedMedia-3.0');
-
+---Initialize the addon with SavedVariables and create the options panel
 function XIV_Databar:OnInitialize()
-    self.db = LibStub("AceDB-3.0"):New("XIVBarDB", self.defaults, true)
-    self.LSM:Register(self.LSM.MediaType.FONT, 'Homizio Bold', self.constants.mediaPath.."homizio_bold.ttf")
-    self.frames = {}
+    self.db = AceDB:New("XIVBarDB", ns.GetDefaults(), true);
+    LibSharedMedia:Register(LibSharedMedia.MediaType.FONT, 'Homizio Bold', ns.GetConstants().mediaPath.."homizio_bold.ttf");
+    self.frames = {};
 
-    self.fontFlags = {'', 'OUTLINE', 'THICKOUTLINE', 'MONOCHROME'}
+    self.fontFlags = {'', 'OUTLINE', 'THICKOUTLINE', 'MONOCHROME'};
 
     local options = {
         name = "XIV Bar",
@@ -136,20 +73,23 @@ function XIV_Databar:OnInitialize()
 
     self.db:RegisterDefaults(self.defaults)
 
-    LibStub("AceConfig-3.0"):RegisterOptionsTable(AddonName, options)
-    self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions(AddonName, "XIV Bar", nil, "general")
+    LibStub("AceConfig-3.0"):RegisterOptionsTable(addonname, options)
+    self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions(addonname, "XIV Bar", nil, "general")
 
     --options.args.modules = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db)
-    self.modulesOptionFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions(AddonName, L['Modules'], "XIV Bar", "modules")
+    self.modulesOptionFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions(addonname, L['Modules'], "XIV Bar", "modules")
 
     options.args.profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db)
-    self.profilesOptionFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions(AddonName, 'Profiles', "XIV Bar", "profiles")
+    self.profilesOptionFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions(addonname, 'Profiles', "XIV Bar", "profiles")
 
     self.timerRefresh = false
 
     self:RegisterChatCommand('xivbar', 'ToggleConfig')
     self:RegisterChatCommand('xb', 'ToggleConfig')
 end
+
+
+--[[  NOT REFACTORED BELOW THIS COMMENT  ]]--
 
 function XIV_Databar:OnEnable()
     self:CreateMainBar()
@@ -339,7 +279,7 @@ function XIV_Databar:Refresh()
 end
 
 function XIV_Databar:GetFont(size)
-    return self.LSM:Fetch(self.LSM.MediaType.FONT, self.db.profile.text.font), size, self.fontFlags[self.db.profile.text.flags]
+    return self.LibSharedMedia:Fetch(self.LibSharedMedia.MediaType.FONT, self.db.profile.text.font), size, self.fontFlags[self.db.profile.text.flags]
 end
 
 function XIV_Databar:GetClassColors()

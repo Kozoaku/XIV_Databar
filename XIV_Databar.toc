@@ -14,5 +14,8 @@
 embeds.xml
 
 locales\locales.xml
+
+options.lua
 core.lua
+
 modules\load_modules.xml
