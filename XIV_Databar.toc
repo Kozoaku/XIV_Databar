@@ -12,10 +12,6 @@
 ## X-Issues: https://github.com/@project-author@/XIV_Databar/issues
 
 embeds.xml
-
 locales\locales.xml
 
-options.lua
 core.lua
-
-modules\load_modules.xml
