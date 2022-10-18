@@ -3,7 +3,7 @@
 ## Interface-TBC: 20504
 ## Interface-Classic: 11403
 
-## Title: |cffbab86c/XIV|r_Databar
+## Title: |cffbab86cXIV|r_Databar
 ## Author: @project-author@
 ## Version: @project-version@
 
