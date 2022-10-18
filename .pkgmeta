@@ -21,3 +21,4 @@ externals:
 
 ignore:
   - README.md
+  - .vscode
