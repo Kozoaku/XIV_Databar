@@ -149,7 +149,7 @@ function GoldModule:Refresh()
   if db.modules.gold.showFreeBagSpace then
     local freeSpace = 0
     for i = 0, 4 do
-      freeSpace = freeSpace + GetContainerNumFreeSlots(i)
+      freeSpace = freeSpace + C_Container.GetContainerNumFreeSlots(i)
     end
     self.bagText:SetFont(xb:GetFont(db.text.fontSize))
     self.bagText:SetTextColor(xb:GetColor('normal'))
