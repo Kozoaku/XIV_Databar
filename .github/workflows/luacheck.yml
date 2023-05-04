@@ -15,3 +15,5 @@ jobs:
           fetch-depth: 0
       - name: Luacheck
         uses: nebularg/actions-luacheck@v1
+        with:
+          config: https://raw.githubusercontent.com/Jayrgo/wow-luacheckrc/mainline/.luacheckrc
