@@ -81,15 +81,13 @@ function VolumeModule:RegisterEvents()
 		GameTooltip:Show()
 	end)
 
-	self.frame:SetScript("OnClick", function(button, down)
+	self.frame:SetScript("OnClick", function(s, button, down)
 		local volume = tonumber(GetCVar("Sound_MasterVolume"));
 
 		if button == "LeftButton" then
-
-		SetCVar( "Sound_MasterVolume", volume + xb.db.profile.modules.MasterVolume.step);
-
+            SetCVar( "Sound_MasterVolume", volume + xb.db.profile.modules.MasterVolume.step);
 		elseif button == "RightButton" then
-		SetCVar( "Sound_MasterVolume", volume - xb.db.profile.modules.MasterVolume.step);
+            SetCVar( "Sound_MasterVolume", volume - xb.db.profile.modules.MasterVolume.step);
 		end
 		volume = tonumber(GetCVar("Sound_MasterVolume"));
 		if volume <=0 then SetCVar( "Sound_MasterVolume", 0); end
@@ -104,7 +102,7 @@ function VolumeModule:RegisterEvents()
 
 	self.frame:RegisterEvent("PLAYER_ENTERING_WORLD");
 	self.frame:RegisterEvent("CVAR_UPDATE");
-	self.frame:SetScript("OnEvent", function(event, ...)
+	self.frame:SetScript("OnEvent", function(s, event, ...)
 		VolumeModule:MasterVolume_Update_Value();
 	end)
 end
