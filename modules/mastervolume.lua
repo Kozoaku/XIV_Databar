@@ -1,5 +1,4 @@
 local addon, xb = ...
-local _G = _G;
 local L = xb.L;
 
 local VolumeModule = xb:NewModule("VolumeModule", 'AceEvent-3.0')
@@ -81,12 +80,12 @@ function VolumeModule:RegisterEvents()
 		GameTooltip:AddDoubleLine("<"..L['Right-Click']..">", "|cffffffff"..BINDING_NAME_MASTERVOLUMEDOWN.."|r")
 		GameTooltip:Show()
 	end)
-	
+
 	self.frame:SetScript("OnClick", function(self, button, down)
 		local volume = tonumber(GetCVar("Sound_MasterVolume"));
-		
+
 		if button == "LeftButton" then
-		
+
 		SetCVar( "Sound_MasterVolume", volume + xb.db.profile.modules.MasterVolume.step);
 
 		elseif button == "RightButton" then
@@ -96,13 +95,13 @@ function VolumeModule:RegisterEvents()
 		if volume <=0 then SetCVar( "Sound_MasterVolume", 0); end
 		if volume >=1 then SetCVar( "Sound_MasterVolume", 1); end
 	end)
-	
+
 	self.frame:SetScript("OnLeave", function()
 		self.icon:SetVertexColor(xb:GetColor('normal'))
 		self.text:SetTextColor(xb:GetColor('inactive'))
 		GameTooltip:Hide();
 	end)
-	
+
 	self.frame:RegisterEvent("PLAYER_ENTERING_WORLD");
 	self.frame:RegisterEvent("CVAR_UPDATE");
 	self.frame:SetScript("OnEvent", function(self,event, ...)
