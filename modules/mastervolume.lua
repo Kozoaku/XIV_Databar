@@ -136,6 +136,12 @@ function VolumeModule:Refresh()
 	end
 end
 
+local function Update_MasterVolume()
+	if VolumeModule then
+	    VolumeModule:MasterVolume_Update_Value()
+	end
+end
+
 function VolumeModule:MasterVolume_Update_Value()
 	local volume = tonumber(GetCVar("Sound_MasterVolume"));
 	local volumePercent = (volume * 100);
@@ -147,8 +153,8 @@ function VolumeModule:MasterVolume_Update_Value()
 end
 
 function VolumeModule:Hooks()
-	hooksecurefunc("Sound_MasterVolumeUp", VolumeModule.MasterVolume_Update_Value)
-	hooksecurefunc("Sound_MasterVolumeDown", VolumeModule.MasterVolume_Update_Value)
+	hooksecurefunc("Sound_MasterVolumeUp", Update_MasterVolume)
+	hooksecurefunc("Sound_MasterVolumeDown", Update_MasterVolume)
 
 	hooksecurefunc("SetCVar", function(cvar, value)
 		if cvar == "Sound_MasterVolume" then
