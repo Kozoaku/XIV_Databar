@@ -1,4 +1,4 @@
-local addon, xb = ...
+local xb = select(2, ...)
 local L = xb.L;
 
 local VolumeModule = xb:NewModule("VolumeModule", 'AceEvent-3.0')
