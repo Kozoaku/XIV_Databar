@@ -51,12 +51,12 @@ function VolumeModule:CreateModuleFrame()
 	end
 
 	self.frame:SetPoint('LEFT', parentFrame, relativeAnchorPoint, xOffset, 0)
-	
+
 	self.icon = self.frame:CreateTexture(nil,"OVERLAY",nil,7)
 	self.icon:SetPoint("LEFT")
 	self.icon:SetTexture(xb.constants.mediaPath.."datatexts\\sound")
 	self.icon:SetVertexColor(xb:GetColor('normal'))
-	
+
 	self.text = self.frame:CreateFontString(nil, "OVERLAY")
 	self.text:SetFont(xb:GetFont(xb.db.profile.text.fontSize))
 	self.text:SetPoint("RIGHT", self.frame,2,0)
@@ -68,7 +68,7 @@ function VolumeModule:RegisterEvents()
 		if InCombatLockdown() then return end
 		self.icon:SetVertexColor(xb:GetColor('hover'))
 		self.text:SetTextColor(xb:GetColor('hover'))
-		
+
 		if xb.db.profile.general.barPosition == "TOP" then
 			GameTooltip:SetOwner(self.frame, "ANCHOR_BOTTOM")
 		else
@@ -81,7 +81,7 @@ function VolumeModule:RegisterEvents()
 		GameTooltip:Show()
 	end)
 
-	self.frame:SetScript("OnClick", function(self, button, down)
+	self.frame:SetScript("OnClick", function(button, down)
 		local volume = tonumber(GetCVar("Sound_MasterVolume"));
 
 		if button == "LeftButton" then
@@ -104,7 +104,7 @@ function VolumeModule:RegisterEvents()
 
 	self.frame:RegisterEvent("PLAYER_ENTERING_WORLD");
 	self.frame:RegisterEvent("CVAR_UPDATE");
-	self.frame:SetScript("OnEvent", function(self,event, ...)
+	self.frame:SetScript("OnEvent", function(event, ...)
 		VolumeModule:MasterVolume_Update_Value();
 	end)
 end
