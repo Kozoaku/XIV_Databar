@@ -1,3 +1,10 @@
+## [3.1.2-beta.1](https://github.com/Kozoaku/XIV_Databar/compare/v3.1.1...v3.1.2-beta.1) (2023-07-19)
+
+
+### Bug Fixes
+
+* **Volume:** stop errors when volume is change through keybind ([#73](https://github.com/Kozoaku/XIV_Databar/issues/73)) ([5cc49c0](https://github.com/Kozoaku/XIV_Databar/commit/5cc49c0359f366b6f4c6aeaad8074daf90861962))
+
 ## [3.1.1](https://github.com/Kozoaku/XIV_Databar/compare/v3.1.0...v3.1.1) (2023-05-04)
 
 
