@@ -1,3 +1,10 @@
+## [3.1.2-beta.2](https://github.com/Kozoaku/XIV_Databar/compare/v3.1.2-beta.1...v3.1.2-beta.2) (2023-07-20)
+
+
+### Bug Fixes
+
+* **Currency:** use class color for xp bar color when setting is checked ([#76](https://github.com/Kozoaku/XIV_Databar/issues/76)) ([04c76af](https://github.com/Kozoaku/XIV_Databar/commit/04c76af5322e2f6e95b5a2845a11228759b96253))
+
 ## [3.1.2-beta.1](https://github.com/Kozoaku/XIV_Databar/compare/v3.1.1...v3.1.2-beta.1) (2023-07-19)
 
 
