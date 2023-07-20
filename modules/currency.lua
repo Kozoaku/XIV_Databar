@@ -1,5 +1,4 @@
-local AddOnName, XIVBar = ...;
-local _G = _G;
+local XIVBar = select(2, ...)
 local xb = XIVBar;
 local L = XIVBar.L;
 
@@ -240,7 +239,6 @@ function CurrencyModule:RegisterFrameEvents()
 
   self.xpFrame:SetScript('OnLeave', function()
     if InCombatLockdown() then return; end
-    local db = xb.db.profile
     self.xpText:SetTextColor(xb:GetColor('normal'))
 	if xb.db.profile.modules.currency.showTooltip then
       GameTooltip:Hide()
