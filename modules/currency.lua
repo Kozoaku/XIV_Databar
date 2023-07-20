@@ -3,6 +3,8 @@ local _G = _G;
 local xb = XIVBar;
 local L = XIVBar.L;
 
+local MAX_PLAYER_LEVEL = GetMaxLevelForPlayerExpansion()
+
 local CurrencyModule = xb:NewModule("CurrencyModule", 'AceEvent-3.0', 'AceHook-3.0')
 
 function CurrencyModule:GetName()
