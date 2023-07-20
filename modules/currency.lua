@@ -32,7 +32,7 @@ end
 
 function CurrencyModule:OnEnable()
   if self.currencyFrame == nil then
-    self.currencyFrame = CreateFrame("FRAME", nil, xb:GetFrame('bar'))
+    self.currencyFrame = CreateFrame("FRAME", "CurrencyFrame", xb:GetFrame('bar'))
     xb:RegisterFrame('currencyFrame', self.currencyFrame)
   end
 
@@ -87,11 +87,10 @@ function CurrencyModule:Refresh()
     self.xpText:SetText(string.upper(LEVEL..' '..UnitLevel("player")..' '..UnitClass('player')))
     self.xpText:SetPoint('TOPLEFT', self.xpIcon, 'TOPRIGHT', 5, 0)
 
-    self.xpBar:SetStatusBarTexture(1, 1, 1)
     if db.modules.currency.xpBarCC then
-      self.xpBar:SetStatusBarColor(xb:GetClassColors())
+      self.xpBar:SetColorFill(xb:GetClassColors())
     else
-      self.xpBar:SetStatusBarColor(xb:GetColor('normal'))
+      self.xpBar:SetColorFill(xb:GetColor('normal'))
     end
     self.xpBar:SetMinMaxValues(0, UnitXPMax('player'))
     self.xpBar:SetValue(UnitXP('player'))
@@ -173,17 +172,17 @@ end
 
 function CurrencyModule:CreateFrames()
   for i = 1, 3 do
-    self.curButtons[i] = self.curButtons[i] or CreateFrame("BUTTON", nil, self.currencyFrame)
+    self.curButtons[i] = self.curButtons[i] or CreateFrame("BUTTON", "Tracked_Currency_Frame_"..i, self.currencyFrame)
     self.curIcons[i] = self.curIcons[i] or self.curButtons[i]:CreateTexture(nil, 'OVERLAY')
     self.curText[i] = self.curText[i] or self.curButtons[i]:CreateFontString(nil, "OVERLAY")
     self.curButtons[i]:Hide()
   end
 
-  self.xpFrame = self.xpFrame or CreateFrame("BUTTON", nil, self.currencyFrame)
-  self.xpIcon = self.xpIcon or self.xpFrame:CreateTexture(nil, 'OVERLAY')
-  self.xpText = self.xpText or self.xpFrame:CreateFontString(nil, 'OVERLAY')
-  self.xpBar = self.xpBar or CreateFrame('STATUSBAR', nil, self.xpFrame)
-  self.xpBarBg = self.xpBarBg or self.xpBar:CreateTexture(nil, 'BACKGROUND')
+  self.xpFrame = self.xpFrame or CreateFrame("BUTTON", "XP_Frame", self.currencyFrame)
+  self.xpIcon = self.xpIcon or self.xpFrame:CreateTexture("XP_Frame_Icon", 'OVERLAY')
+  self.xpText = self.xpText or self.xpFrame:CreateFontString("XP_Frame_Font_String", 'OVERLAY')
+  self.xpBar = self.xpBar or CreateFrame('STATUSBAR', "XP_Frame_XP_Bar", self.xpFrame)
+  self.xpBarBg = self.xpBarBg or self.xpBar:CreateTexture("XP_Frame_XP_Bar_BG", 'BACKGROUND')
   self.xpFrame:Hide()
 end
 
