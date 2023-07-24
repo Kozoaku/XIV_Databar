@@ -2,22 +2,9 @@ local XIVBar = select(2, ...);
 local xb = XIVBar;
 local L = XIVBar.L;
 
-if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
-  ---Proxy for C_Containter.GetContainerNumFreeSlots
-  ---@paramsig bagIndex
-  ---@param bagIndex number
-  ---@return number numFreeSlots
-  ---@return number bagFamily
-  function GetContainerNumFreeSlots(bagIndex)
-    return C_Container.GetContainerNumFreeSlots(bagIndex)
-  end
-end
-
 local GoldModule = xb:NewModule("GoldModule", 'AceEvent-3.0')
 
----@diagnostic disable-next-line: unused-local
 local isSessionNegative, isDailyNegative = false, false
----@diagnostic disable-next-line: unused-local
 local positiveSign = "|cff00ff00+ "
 local negativeSign = "|cffff0000- "
 
@@ -33,8 +20,8 @@ local function shortenNumber(num)
   end
 end
 
-local function moneyWithTexture(amount,session)
-  local copper, silver = 0,0;
+local function moneyWithTexture(amount, session)
+  local copper, silver = 0, 0
   local showSC = xb.db.profile.modules.gold.showSmallCoins
   local shortThousands = xb.db.profile.modules.gold.shortThousands
   local shortGold = ""
@@ -51,7 +38,7 @@ local function moneyWithTexture(amount,session)
   amount = string.format("%.0f",amount)
 
   if not showSC then
-    silver,copper = "00","00"
+    silver, copper = "00","00"
   end
 
   amountStringTexture = GetCoinTextureString(amount..""..silver..""..copper)
@@ -138,7 +125,7 @@ function GoldModule:Refresh()
     if db.modules.gold.showFreeBagSpace then
       local freeSpace = 0
       for i = 0, 4 do
-        freeSpace = freeSpace + GetContainerNumFreeSlots(i)
+        freeSpace = freeSpace + C_Container.GetContainerNumFreeSlots(i)
       end
       self.bagText:SetFont(xb:GetFont(db.text.fontSize))
       self.bagText:SetText('('..tostring(freeSpace)..')')
@@ -161,7 +148,7 @@ function GoldModule:Refresh()
   if db.modules.gold.showFreeBagSpace then
     local freeSpace = 0
     for i = 0, 4 do
-      freeSpace = freeSpace + GetContainerNumFreeSlots(i)
+      freeSpace = freeSpace + C_Container.GetContainerNumFreeSlots(i)
     end
     self.bagText:SetFont(xb:GetFont(db.text.fontSize))
     self.bagText:SetTextColor(xb:GetColor('normal'))
@@ -270,7 +257,7 @@ function GoldModule:PLAYER_MONEY()
   local curMoney = gdb.currentMoney
   local tmpMoney = GetMoney()
   local moneyDiff = tmpMoney - curMoney
-  
+
   gdb.sessionMoney = gdb.sessionMoney + moneyDiff
   gdb.dailyMoney = gdb.dailyMoney + moneyDiff
 
