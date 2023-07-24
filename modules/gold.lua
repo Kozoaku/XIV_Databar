@@ -1,5 +1,4 @@
-local AddOnName, XIVBar = ...;
-local _G = _G;
+local XIVBar = select(2, ...);
 local xb = XIVBar;
 local L = XIVBar.L;
 
@@ -16,7 +15,9 @@ end
 
 local GoldModule = xb:NewModule("GoldModule", 'AceEvent-3.0')
 
+---@diagnostic disable-next-line: unused-local
 local isSessionNegative, isDailyNegative = false, false
+---@diagnostic disable-next-line: unused-local
 local positiveSign = "|cff00ff00+ "
 local negativeSign = "|cffff0000- "
 
@@ -48,7 +49,7 @@ local function moneyWithTexture(amount,session)
   copper = string.format("%02d",copper)
 
   amount = string.format("%.0f",amount)
-  
+
   if not showSC then
     silver,copper = "00","00"
   end
@@ -86,12 +87,12 @@ function GoldModule:OnInitialize()
       xb.db.factionrealm[xb.constants.playerName].dailyMoney = 0
     end
   end
-  
+
   local playerData = xb.db.factionrealm[xb.constants.playerName]
 
   local curDate = C_DateAndTime.GetCurrentCalendarTime()
   local today = ConvertDateToNumber(curDate.month, curDate.monthDay, curDate.year)
-  
+
   if playerData.lastLoginDate then
       if playerData.lastLoginDate < today then -- is true, if last time player logged in was the day before or even earlier
           playerData.lastLoginDate = today
@@ -241,7 +242,6 @@ function GoldModule:RegisterFrameEvents()
 
   self.goldButton:SetScript('OnLeave', function()
     if InCombatLockdown() then return; end
-    local db = xb.db.profile
     self.goldText:SetTextColor(xb:GetColor('normal'))
     self.bagText:SetTextColor(xb:GetColor('normal'))
     GameTooltip:Hide()
@@ -315,7 +315,7 @@ function listAllCharactersByFactionRealm()
     }
   }
 
-  for k,v in pairs(xb.db.factionrealm) do
+  for k in pairs(xb.db.factionrealm) do
     optTable[k]={
       name = k,
       width = "full",
