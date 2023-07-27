@@ -45,10 +45,15 @@ local function moneyWithTexture(amount, showSign)
   if showSign and amount < 0 then
     amountStringTexture = negativeSign..amountStringTexture or amountStringTexture
   end
-  
+
   return amountStringTexture
 end
 
+---comment
+---@param month string | number
+---@param day string | number
+---@param year string | number
+---@return number date
 local function ConvertDateToNumber(month, day, year)
   month = gsub(month, "(%d)(%d?)", function(d1, d2) return d2 == "" and "0"..d1 or d1..d2 end) -- converts M to MM
   day = gsub(day, "(%d)(%d?)", function(d1, d2) return d2 == "" and "0"..d1 or d1..d2 end) -- converts D to DD
@@ -97,10 +102,10 @@ end
 function GoldModule:OnInitialize()
   if not xb.db.factionrealm[xb.constants.playerName] then
     xb.db.factionrealm[xb.constants.playerName] = { currentMoney = 0, sessionMoney = 0, dailyMoney = 0 }
-  else
-    if not xb.db.factionrealm[xb.constants.playerName].dailyMoney then
-      xb.db.factionrealm[xb.constants.playerName].dailyMoney = 0
-    end
+  end
+
+  if not xb.db.factionrealm[xb.constants.playerName].dailyMoney then
+    xb.db.factionrealm[xb.constants.playerName].dailyMoney = 0
   end
 
   local playerData = xb.db.factionrealm[xb.constants.playerName]
@@ -111,13 +116,17 @@ function GoldModule:OnInitialize()
   if playerData.lastLoginDate then
       if playerData.lastLoginDate < today then -- is true, if last time player logged in was the day before or even earlier
           playerData.lastLoginDate = today
-          playerData.daily = 0
+          playerData.dailyMoney = 0
       end
   else
     playerData.lastLoginDate = today
   end
 
-  if not playerData.class then playerData.class = select(2, UnitClass("player")) end
+  if not playerData.class then 
+    playerData.class = select(2, UnitClass("player"))
+  end
+
+  xb.db.factionrealm[xb.constants.playerName] = playerData
 end
 
 function GoldModule:OnEnable()
