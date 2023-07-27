@@ -101,26 +101,26 @@ end
 -- Make sure to disable "Tooltip" in the Skins section of ElvUI together with
 -- unchecking "Use ElvUI for tooltips" in XIV options to not have ElvUI fuck with tooltips
 function MenuModule:SkinFrame(frame, name)
-	if xb.db.profile.general.useElvUI and (IsAddOnLoaded('ElvUI') or IsAddOnLoaded('Tukui')) then
-		if frame.StripTextures then
-			frame:StripTextures()
-		end
-		if frame.SetTemplate then
-			frame:SetTemplate("Transparent")
-		end
+  if xb.db.profile.general.useElvUI and (IsAddOnLoaded('ElvUI') or IsAddOnLoaded('Tukui')) then
+    if frame.StripTextures then
+      frame:StripTextures()
+    end
+    if frame.SetTemplate then
+      frame:SetTemplate("Transparent")
+    end
 
-		local close = _G[name.."CloseButton"] or frame.CloseButton
-		if close and close.SetAlpha then
-			if ElvUI then
-				ElvUI[1]:GetModule('Skins'):HandleCloseButton(close)
-			end
+    local close = _G[name.."CloseButton"] or frame.CloseButton
+    if close and close.SetAlpha then
+      if ElvUI then
+        ElvUI[1]:GetModule('Skins'):HandleCloseButton(close)
+      end
 
-			if Tukui and Tukui[1] and Tukui[1].SkinCloseButton then
-				Tukui[1].SkinCloseButton(close)
-			end
-			close:SetAlpha(1)
-		end
-	end
+      if Tukui and Tukui[1] and Tukui[1].SkinCloseButton then
+        Tukui[1].SkinCloseButton(close)
+      end
+      close:SetAlpha(1)
+    end
+  end
 end
 
 function MenuModule:OnEnable()
@@ -133,9 +133,9 @@ function MenuModule:OnEnable()
   self.microMenuFrame:Show()
 
   if not self.frames.menu then
-	  self:CreateFrames()
-	  self:RegisterFrameEvents()
-	  self:CreateIcons()
+    self:CreateFrames()
+    self:RegisterFrameEvents()
+    self:CreateIcons()
   end
   xb:Refresh()
 end
@@ -189,8 +189,8 @@ function MenuModule:Refresh()
     self.bgTexture[name]:SetPoint('CENTER', frame, 'CENTER')
     if xb.db.profile.modules.microMenu.hideSocialText then
       frame:Hide()
-	else
-	  frame:Show()
+  else
+    frame:Show()
     end
   end
 
@@ -199,13 +199,13 @@ function MenuModule:Refresh()
 end
 
 function MenuModule:UpdateMenu()
-	for _,frame in pairs(self.frames) do
-		frame:Hide()
-	end
-	self:UnregisterFrameEvents()
-	self:CreateFrames()
-	self:CreateIcons()
-	self:RegisterFrameEvents()
+  for _,frame in pairs(self.frames) do
+    frame:Hide()
+  end
+  self:UnregisterFrameEvents()
+  self:CreateFrames()
+  self:CreateIcons()
+  self:RegisterFrameEvents()
 end
 
 function MenuModule:CreateFrames()
@@ -233,7 +233,7 @@ function MenuModule:CreateFrames()
   if mm.guild then
     self.frames.guild = CreateFrame("BUTTON", "guild", parentFrame)
     parentFrame = self.frames.guild
-	  self.text.guild = self.frames.guild:CreateFontString(nil, 'OVERLAY')
+    self.text.guild = self.frames.guild:CreateFontString(nil, 'OVERLAY')
     self.bgTexture.guild = self.frames.guild:CreateTexture(nil, "OVERLAY")
   else
     if self.frames.guild then
@@ -246,7 +246,7 @@ function MenuModule:CreateFrames()
   if mm.social then
     self.frames.social = CreateFrame("BUTTON", "social", parentFrame)
     parentFrame = self.frames.social
-	  self.text.social = self.frames.social:CreateFontString(nil, 'OVERLAY')
+    self.text.social = self.frames.social:CreateFontString(nil, 'OVERLAY')
     self.bgTexture.social = self.frames.social:CreateTexture(nil, "OVERLAY")
   else
     if self.frames.social then
@@ -341,18 +341,18 @@ function MenuModule:CreateFrames()
     self.frames.shop = CreateFrame("BUTTON", "shop", parentFrame)
     parentFrame = self.frames.shop
   else
-	  if self.frames.shop then
-		  self.frames.shop = nil
-	  end
+    if self.frames.shop then
+      self.frames.shop = nil
+    end
   end
 
   if mm.help then
     self.frames.help = CreateFrame("BUTTON", "help", parentFrame)
     parentFrame = self.frames.help
   else
-	  if self.frames.help then
-		  self.frames.help = nil
-	  end
+    if self.frames.help then
+      self.frames.help = nil
+    end
   end
 end
 
@@ -491,8 +491,8 @@ function MenuModule:DefaultHover(name)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if self.icons[name] ~= nil then
       self.icons[name]:SetVertexColor(unpack(xb:HoverColors()))
-	    self.tipHover = (name == 'social')
-	    self.gtipHover = (name == 'guild')
+      self.tipHover = (name == 'social')
+      self.gtipHover = (name == 'guild')
     end
   end
 end
@@ -515,18 +515,18 @@ function MenuModule:SocialHover(hoverFunc)
     end
 
     -- determines whether SHIFT/ALT/CTRL has been pressed based on the user's designated modifier
-	  local modifierFunc = IsShiftKeyDown
-	  if self.modifier == "ALT" then modifierFunc = IsAltKeyDown
-	  elseif self.modifier == "CONTROL" then modifierFunc = IsControlKeyDown end
+    local modifierFunc = IsShiftKeyDown
+    if self.modifier == "ALT" then modifierFunc = IsAltKeyDown
+    elseif self.modifier == "CONTROL" then modifierFunc = IsControlKeyDown end
 
     -- if the social tooltip already exists, deletus fetus it
-	  if self.LTip:IsAcquired("SocialToolTip") then self.LTip:Release(self.LTip:Acquire("SocialToolTip")) end
+    if self.LTip:IsAcquired("SocialToolTip") then self.LTip:Release(self.LTip:Acquire("SocialToolTip")) end
 
     -- declare our LTip tooltip with 2 columns and mouse interaction when hovering/leaving/updating the tooltip
     local tooltip = self.LTip:Acquire("SocialToolTip", 2, "LEFT", "RIGHT")
-	  tooltip:EnableMouse(true)
-	  tooltip:SetScript("OnEnter", function() self.tipHover = true end)
-	  tooltip:SetScript("OnLeave", function() self.tipHover = false end)
+    tooltip:EnableMouse(true)
+    tooltip:SetScript("OnEnter", function() self.tipHover = true end)
+    tooltip:SetScript("OnLeave", function() self.tipHover = false end)
     tooltip:SetScript("OnUpdate", function() if not self.tipHover and not self.lineHover then tooltip:Release() end end)
     MenuModule:SkinFrame(tooltip, "SocialToolTip")
 
@@ -634,8 +634,8 @@ function MenuModule:SocialHover(hoverFunc)
             -- add left and right line to the tooltip
             tooltip:AddLine(lineLeft, lineRight)
             -- set up mouse events when the player hovers over/clicks on/leaves the friend's line in the tooltip
-      		  tooltip:SetLineScript(tooltip:GetLineCount(), "OnEnter", function() self.lineHover = true end)
-      		  tooltip:SetLineScript(tooltip:GetLineCount(), "OnLeave", function() self.lineHover = false end)
+            tooltip:SetLineScript(tooltip:GetLineCount(), "OnEnter", function() self.lineHover = true end)
+            tooltip:SetLineScript(tooltip:GetLineCount(), "OnLeave", function() self.lineHover = false end)
             tooltip:SetLineScript(tooltip:GetLineCount(), "OnMouseUp", function(self,_,button)
               -- player left clicks on the friend, checks whether a modifier was used or not after
               if button == "LeftButton" then
@@ -644,7 +644,7 @@ function MenuModule:SocialHover(hoverFunc)
                   -- invite to group / raid if possible
                   if CanGroupWithAccount(friendAccInfo.bnetAccountID) then
                     C_PartyInfo.InviteUnit(charName .. "-" .. realmName)
-  						      --InviteToGroup(charName .. "-" .. realmName)
+                    --InviteToGroup(charName .. "-" .. realmName)
                   end
                 -- player did not use a modifier when left clicking on the friend, send a bnet whisper
                 else
@@ -652,12 +652,12 @@ function MenuModule:SocialHover(hoverFunc)
                 end
 
               -- player right clicked on the friend, send an ingame whisper if the player is not playing classic or of the opposite faction
-  			      elseif button == "RightButton" then
+              elseif button == "RightButton" then
                 if (not isClassic and charName and faction == playerFaction ) then
                   ChatFrame_SendTell(charName .. "-" .. realmName)
-  				      end
-  			      end
-  		      end)
+                end
+              end
+            end)
           end --optApp
         end -- isOnline
       end -- for in BNGetNumFriends
@@ -688,30 +688,30 @@ function MenuModule:SocialHover(hoverFunc)
           -- add left and right line to the tooltip
           tooltip:AddLine(lineLeft, lineRight)
           -- set up mouse events when the player hovers over/clicks on/leaves the friend's line in the tooltip
-		      tooltip:SetLineScript(tooltip:GetLineCount(),"OnEnter", function() self.lineHover = true end)
-		      tooltip:SetLineScript(tooltip:GetLineCount(),"OnLeave", function() self.lineHover = false end)
+          tooltip:SetLineScript(tooltip:GetLineCount(),"OnEnter", function() self.lineHover = true end)
+          tooltip:SetLineScript(tooltip:GetLineCount(),"OnLeave", function() self.lineHover = false end)
           tooltip:SetLineScript(tooltip:GetLineCount(),"OnMouseUp", function(self, _, button)
             -- if there is no realm name in the friend's name, the friend is playing on the same realm as the player
-		        if not name:find('%u%U*-%u%U') then
-				      local homeRealm = GetRealmName()
-				      homeRealm = homeRealm:gsub("%s+", "")
-				      name = name .. "-" .. homeRealm
+            if not name:find('%u%U*-%u%U') then
+              local homeRealm = GetRealmName()
+              homeRealm = homeRealm:gsub("%s+", "")
+              name = name .. "-" .. homeRealm
             end
 
             -- player right clicked on the friend, send an ingame whisper
-		        if button == "RightButton" then
+            if button == "RightButton" then
               ChatFrame_SendTell(name)
             -- player SHIFT/ALT/CTRL + left clicked on the friend, attempt to invite to group / raid
             elseif button == "LeftButton" and modifierFunc() then
               C_PartyInfo.InviteUnit(name)
-			      end
-		      end)
+            end
+          end)
         end -- isOnline
       end -- for in GetNumFriends
     end -- totalOnlineFriends
 
     -- add section under the friends list for (modifiers) + left/right click and what each action does
-	  tooltip:AddLine(' ',' ')
+    tooltip:AddLine(' ',' ')
     tooltip:AddLine('<'..L['Left-Click']..'>', L['Whisper BNet'])
     tooltip:SetCellTextColor(tooltip:GetLineCount(), 1, r, g, b, 1)
     tooltip:AddLine('<'..self.modifier..'+'..L['Left-Click']..'>', CALENDAR_INVITELIST_INVITETORAID)
@@ -738,18 +738,18 @@ function MenuModule:GuildHover(hoverFunc)
     end
 
     -- determines whether SHIFT/ALT/CTRL has been pressed based on the user's designated modifier
-	  local modifierFunc = IsShiftKeyDown
-	  if self.modifier == "ALT" then modifierFunc = IsAltKeyDown
-	  elseif self.modifier == "CONTROL" then modifierFunc = IsControlKeyDown end
+    local modifierFunc = IsShiftKeyDown
+    if self.modifier == "ALT" then modifierFunc = IsAltKeyDown
+    elseif self.modifier == "CONTROL" then modifierFunc = IsControlKeyDown end
 
     -- if the guild tooltip already exists, deletus fetus it
     if self.LTip:IsAcquired("GuildToolTip") then self.LTip:Release(self.LTip:Acquire("GuildToolTip")) end
 
     -- declare our LTip tooltip with 2 columns and mouse interaction when hovering/leaving/updating the tooltip
     local tooltip = self.LTip:Acquire("GuildToolTip", 2, "LEFT", "RIGHT")
-	  tooltip:EnableMouse(true)
-	  tooltip:SetScript("OnEnter", function() self.gtipHover = true end)
-	  tooltip:SetScript("OnLeave", function() self.gtipHover = false end)
+    tooltip:EnableMouse(true)
+    tooltip:SetScript("OnEnter", function() self.gtipHover = true end)
+    tooltip:SetScript("OnLeave", function() self.gtipHover = false end)
     tooltip:SetScript("OnUpdate", function() if not self.gtipHover and not self.glineHover then tooltip:Release() end end)
     MenuModule:SkinFrame(tooltip, "GuildToolTip")
 
@@ -791,14 +791,14 @@ function MenuModule:GuildHover(hoverFunc)
         local lineLeft = string.format('%s |c%s%s|r %s |cffecd672%s|r', level, colorHex, charName or name or L['No Info'], status, note)
         local lineRight = string.format('%s|cffffffff %s', (isMobile and '|cffffffa0[M]|r ' or ''), zone or '')
         tooltip:AddLine(lineLeft, lineRight)
-		    tooltip:SetLineScript(tooltip:GetLineCount(),'OnEnter', function() self.glineHover = true end)
-		    tooltip:SetLineScript(tooltip:GetLineCount(),'OnLeave', function() self.glineHover = false end)
-		    tooltip:SetLineScript(tooltip:GetLineCount(),'OnMouseUp', function(self, _, button)
-		      if button == 'LeftButton' then
-				    if modifierFunc() then C_PartyInfo.InviteUnit(name)
+        tooltip:SetLineScript(tooltip:GetLineCount(),'OnEnter', function() self.glineHover = true end)
+        tooltip:SetLineScript(tooltip:GetLineCount(),'OnLeave', function() self.glineHover = false end)
+        tooltip:SetLineScript(tooltip:GetLineCount(),'OnMouseUp', function(self, _, button)
+          if button == 'LeftButton' then
+            if modifierFunc() then C_PartyInfo.InviteUnit(name)
             else ChatFrame_OpenChat(SLASH_SMART_WHISPER1 .. ' ' .. name .. ' ') end
-			    end
-		    end)
+          end
+        end)
       end
     end
     -- add section under member list for (modifiers) + left/right click and what each section does
@@ -832,10 +832,10 @@ function MenuModule:CreateClickFunctions()
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       if ChatMenu:IsVisible() then
-		    ChatMenu:Hide()
-  	  else
-  	    ChatFrame_ToggleMenu()
-  	  end
+        ChatMenu:Hide()
+      else
+        ChatFrame_ToggleMenu()
+      end
     end
   end; --chat
 
@@ -863,71 +863,71 @@ function MenuModule:CreateClickFunctions()
   self.functions.spell = function(self, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
-  		ToggleFrame(SpellBookFrame)
-  	end
+      ToggleFrame(SpellBookFrame)
+    end
   end; --spell
 
   self.functions.talent = function(self, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
-  		ToggleTalentFrame()
-  	end
+      ToggleTalentFrame()
+    end
   end; --talent
 
   self.functions.journal = function(self, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
-  		ToggleEncounterJournal()
-  	end
+      ToggleEncounterJournal()
+    end
   end; --journal
 
   self.functions.lfg = function(self, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
-  		ToggleLFDParentFrame()
-  	end
+      ToggleLFDParentFrame()
+    end
   end; --lfg
 
   self.functions.pet = function(self, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
-  		ToggleCollectionsJournal()
-  	end
+      ToggleCollectionsJournal()
+    end
   end; --pet
 
   self.functions.ach = function(self, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
-  		ToggleAchievementFrame()
-  	end
+      ToggleAchievementFrame()
+    end
   end; --ach
 
   self.functions.quest = function(self, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
-  		ToggleQuestLog()
-  	end
+      ToggleQuestLog()
+    end
   end; --quest
 
   self.functions.pvp = function(self, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
-  		TogglePVPUI()
-  	end
+      TogglePVPUI()
+    end
   end; --pvp
 
   self.functions.shop = function(self, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
-  		ToggleStoreUI()
-  	end
+      ToggleStoreUI()
+    end
   end; --shop
 
   self.functions.help = function(self, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
-  		ToggleHelpFrame()
-  	end
+      ToggleHelpFrame()
+    end
   end; --help
 end
 
@@ -938,11 +938,11 @@ function MenuModule:GetDefaultOptions()
       combatEn = false,
       mainMenuSpacing = 2,
       iconSpacing = 2,
-	    modifierTooltip = 1,
+      modifierTooltip = 1,
       showGMOTD = false,
       hideSocialText = false,
       osSocialText = 12,
-	    menu = true,
+      menu = true,
       chat = true,
       guild = true,
       social = true,
@@ -1027,23 +1027,23 @@ function MenuModule:GetConfig()
         set = function(_, val) xb.db.profile.modules.microMenu.iconSpacing = val; self:Refresh(); end
       },
 
-	    showGMOTD = {
-		    name = L["GMOTD in Tooltip"],
-		    type = "toggle",
-		    order = 6,
-		    get = function() return xb.db.profile.modules.microMenu.showGMOTD end,
-		    set = function(_,val) xb.db.profile.modules.microMenu.showGMOTD = val; self:Refresh(); end
+      showGMOTD = {
+        name = L["GMOTD in Tooltip"],
+        type = "toggle",
+        order = 6,
+        get = function() return xb.db.profile.modules.microMenu.showGMOTD end,
+        set = function(_,val) xb.db.profile.modules.microMenu.showGMOTD = val; self:Refresh(); end
       },
 
-	    modifierTooltip = {
-		    name = L["Modifier for friend invite"],
-		    order = 7,
-		    type = "select",
-		    values = { SHIFT_KEY_TEXT, ALT_KEY_TEXT, CTRL_KEY_TEXT },
-		    style = "dropdown",
-		    get = function() return xb.db.profile.modules.microMenu.modifierTooltip; end,
-		    set = function(info, val) xb.db.profile.modules.microMenu.modifierTooltip = val; self:Refresh(); end,
-		    disabled = function() return not xb.db.profile.modules.microMenu.guild and not xb.db.profile.modules.microMenu.social end
+      modifierTooltip = {
+        name = L["Modifier for friend invite"],
+        order = 7,
+        type = "select",
+        values = { SHIFT_KEY_TEXT, ALT_KEY_TEXT, CTRL_KEY_TEXT },
+        style = "dropdown",
+        get = function() return xb.db.profile.modules.microMenu.modifierTooltip; end,
+        set = function(info, val) xb.db.profile.modules.microMenu.modifierTooltip = val; self:Refresh(); end,
+        disabled = function() return not xb.db.profile.modules.microMenu.guild and not xb.db.profile.modules.microMenu.social end
       },
 
       hideSocialText = {
