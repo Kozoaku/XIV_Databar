@@ -636,7 +636,7 @@ function MenuModule:SocialHover(hoverFunc)
             -- set up mouse events when the player hovers over/clicks on/leaves the friend's line in the tooltip
             tooltip:SetLineScript(tooltip:GetLineCount(), "OnEnter", function() self.lineHover = true end)
             tooltip:SetLineScript(tooltip:GetLineCount(), "OnLeave", function() self.lineHover = false end)
-            tooltip:SetLineScript(tooltip:GetLineCount(), "OnMouseUp", function(self,_,button)
+            tooltip:SetLineScript(tooltip:GetLineCount(), "OnMouseUp", function(this,_,button)
               -- player left clicks on the friend, checks whether a modifier was used or not after
               if button == "LeftButton" then
                 -- player pressed SHIFT/ALT/CTRL when left clicking the friend
@@ -690,7 +690,7 @@ function MenuModule:SocialHover(hoverFunc)
           -- set up mouse events when the player hovers over/clicks on/leaves the friend's line in the tooltip
           tooltip:SetLineScript(tooltip:GetLineCount(),"OnEnter", function() self.lineHover = true end)
           tooltip:SetLineScript(tooltip:GetLineCount(),"OnLeave", function() self.lineHover = false end)
-          tooltip:SetLineScript(tooltip:GetLineCount(),"OnMouseUp", function(self, _, button)
+          tooltip:SetLineScript(tooltip:GetLineCount(),"OnMouseUp", function(this, _, button)
             -- if there is no realm name in the friend's name, the friend is playing on the same realm as the player
             if not name:find('%u%U*-%u%U') then
               local homeRealm = GetRealmName()
@@ -793,7 +793,7 @@ function MenuModule:GuildHover(hoverFunc)
         tooltip:AddLine(lineLeft, lineRight)
         tooltip:SetLineScript(tooltip:GetLineCount(),'OnEnter', function() self.glineHover = true end)
         tooltip:SetLineScript(tooltip:GetLineCount(),'OnLeave', function() self.glineHover = false end)
-        tooltip:SetLineScript(tooltip:GetLineCount(),'OnMouseUp', function(self, _, button)
+        tooltip:SetLineScript(tooltip:GetLineCount(),'OnMouseUp', function(this, _, button)
           if button == 'LeftButton' then
             if modifierFunc() then C_PartyInfo.InviteUnit(name)
             else ChatFrame_OpenChat(SLASH_SMART_WHISPER1 .. ' ' .. name .. ' ') end
@@ -815,7 +815,7 @@ end
 function MenuModule:CreateClickFunctions()
   if self.functions.menu ~= nil then return; end
 
-  self.functions.menu = function(self, button, down)
+  self.functions.menu = function(this, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       ToggleFrame(GameMenuFrame)
@@ -828,7 +828,7 @@ function MenuModule:CreateClickFunctions()
     end
   end; --menu
 
-  self.functions.chat = function(self, button, down)
+  self.functions.chat = function(this, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       if ChatMenu:IsVisible() then
@@ -839,91 +839,91 @@ function MenuModule:CreateClickFunctions()
     end
   end; --chat
 
-  self.functions.guild = function(self, button, down)
+  self.functions.guild = function(this, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       ToggleGuildFrame()
     end
   end; --guild
 
-  self.functions.social = function(self, button, down)
+  self.functions.social = function(this, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       ToggleFriendsFrame()
     end
   end; --social
 
-  self.functions.char = function(self, button, down)
+  self.functions.char = function(this, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       ToggleCharacter("PaperDollFrame")
     end
   end; --char
 
-  self.functions.spell = function(self, button, down)
+  self.functions.spell = function(this, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       ToggleFrame(SpellBookFrame)
     end
   end; --spell
 
-  self.functions.talent = function(self, button, down)
+  self.functions.talent = function(this, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       ToggleTalentFrame()
     end
   end; --talent
 
-  self.functions.journal = function(self, button, down)
+  self.functions.journal = function(this, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       ToggleEncounterJournal()
     end
   end; --journal
 
-  self.functions.lfg = function(self, button, down)
+  self.functions.lfg = function(this, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       ToggleLFDParentFrame()
     end
   end; --lfg
 
-  self.functions.pet = function(self, button, down)
+  self.functions.pet = function(this, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       ToggleCollectionsJournal()
     end
   end; --pet
 
-  self.functions.ach = function(self, button, down)
+  self.functions.ach = function(this, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       ToggleAchievementFrame()
     end
   end; --ach
 
-  self.functions.quest = function(self, button, down)
+  self.functions.quest = function(this, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       ToggleQuestLog()
     end
   end; --quest
 
-  self.functions.pvp = function(self, button, down)
+  self.functions.pvp = function(this, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       TogglePVPUI()
     end
   end; --pvp
 
-  self.functions.shop = function(self, button, down)
+  self.functions.shop = function(this, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       ToggleStoreUI()
     end
   end; --shop
 
-  self.functions.help = function(self, button, down)
+  self.functions.help = function(this, button, down)
     if (not xb.db.profile.modules.microMenu.combatEn) and InCombatLockdown() then return; end
     if button == "LeftButton" then
       ToggleHelpFrame()
