@@ -209,7 +209,7 @@ function MenuModule:UpdateMenu()
 end
 
 function MenuModule:CreateFrames()
-  parentFrame = xb:GetFrame('microMenuFrame')
+  local parentFrame = xb:GetFrame('microMenuFrame')
   local mm = xb.db.profile.modules.microMenu
 
   if mm.menu then
