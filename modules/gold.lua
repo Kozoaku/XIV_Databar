@@ -9,7 +9,7 @@ local isSessionNegative, isDailyNegative = false, false
 ---Return text string with suffix to indicate the number of digits.
 --   k - number of thousands
 --   M - number of millions
---   B - number of billions 
+--   B - number of billions
 ---@param num number
 ---@return string text shortened text string with suffix
 local function shortenNumber(num)
@@ -42,7 +42,7 @@ local function moneyWithTexture(amount, showSign)
     amountStringTexture = gsub(amountStringTexture, amount.."|T", shortGold.."|T")
   end
 
-  if showSign and amount < 0 then
+  if showSign then
     amountStringTexture = negativeSign..amountStringTexture or amountStringTexture
   end
 
@@ -122,7 +122,7 @@ function GoldModule:OnInitialize()
     playerData.lastLoginDate = today
   end
 
-  if not playerData.class then 
+  if not playerData.class then
     playerData.class = select(2, UnitClass("player"))
   end
 
@@ -233,13 +233,12 @@ function GoldModule:RegisterFrameEvents()
     end
     GameTooltip:AddLine(" ")
 
-    GameTooltip:AddDoubleLine(L['Session Total'], moneyWithTexture(math.abs(xb.db.factionrealm[xb.constants.playerName].sessionMoney),true), r, g, b, 1, 1, 1)
-    GameTooltip:AddDoubleLine(L['Daily Total'], moneyWithTexture(math.abs(xb.db.factionrealm[xb.constants.playerName].dailyMoney),true), r, g, b, 1, 1, 1)
+    GameTooltip:AddDoubleLine(L['Session Total'], moneyWithTexture(math.abs(xb.db.factionrealm[xb.constants.playerName].sessionMoney), isSessionNegative), r, g, b, 1, 1, 1)
+    GameTooltip:AddDoubleLine(L['Daily Total'], moneyWithTexture(math.abs(xb.db.factionrealm[xb.constants.playerName].dailyMoney), isDailyNegative), r, g, b, 1, 1, 1)
     GameTooltip:AddLine(" ")
 
     local totalGold = 0
     for charName, goldData in pairs(xb.db.factionrealm) do
-      local charClass = xb.db.factionrealm[charName].class
       local cc_r, cc_g, cc_b = xb:GetClassColors() and 1, 1, 1
       GameTooltip:AddDoubleLine(charName, moneyWithTexture(goldData.currentMoney), cc_r, cc_g, cc_b, 1, 1, 1)
       totalGold = totalGold + goldData.currentMoney
