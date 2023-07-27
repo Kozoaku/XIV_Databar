@@ -204,10 +204,10 @@ function GoldModule:Refresh()
 end
 
 function GoldModule:CreateFrames()
-  self.goldButton = self.goldButton or CreateFrame("BUTTON", nil, self.goldFrame)
-  self.goldIcon = self.goldIcon or self.goldButton:CreateTexture(nil, 'OVERLAY')
-  self.goldText = self.goldText or self.goldButton:CreateFontString(nil, "OVERLAY")
-  self.bagText = self.bagText or self.goldButton:CreateFontString(nil, "OVERLAY")
+  self.goldButton = self.goldButton or CreateFrame("BUTTON", "GoldButton", self.goldFrame)
+  self.goldIcon = self.goldIcon or self.goldButton:CreateTexture("Icon", 'OVERLAY')
+  self.goldText = self.goldText or self.goldButton:CreateFontString("Text", "OVERLAY")
+  self.bagText = self.bagText or self.goldButton:CreateFontString("Bag", "OVERLAY")
 end
 
 function GoldModule:RegisterFrameEvents()
@@ -222,7 +222,7 @@ function GoldModule:RegisterFrameEvents()
     self.goldText:SetTextColor(unpack(xb:HoverColors()))
     self.bagText:SetTextColor(unpack(xb:HoverColors()))
 
-    GameTooltip:SetOwner(GoldModule.goldFrame, 'ANCHOR_'..xb.miniTextPosition, 0, 6)
+    GameTooltip:SetOwner(GoldModule.goldFrame, 'ANCHOR_'..xb.miniTextPosition, 0, 0)
     local r, g, b, _ = unpack(xb:HoverColors())
     GameTooltip:AddLine("|cFFFFFFFF[|r"..BONUS_ROLL_REWARD_MONEY.."|cFFFFFFFF - |r"..xb.constants.playerFactionLocal.." "..xb.constants.playerRealm.."|cFFFFFFFF]|r", r, g, b)
     if not xb.db.profile.modules.gold.showSmallCoins then
