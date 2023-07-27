@@ -62,6 +62,32 @@ local function ConvertDateToNumber(month, day, year)
   return tonumber(year..month..day)
 end
 
+local function listAllCharactersByFactionRealm()
+  local optTable = {
+    header = {
+      name = "|cff82c5ff"..xb.constants.playerFactionLocal.." "..xb.constants.playerRealm.."|r",
+      type = "header",
+      order = 0
+    },
+    footer = {
+      name = "All the characters listed above are currently registered in the gold database. To delete one or several character, plase uncheck the box correponding to the character(s) to delete.\nThe boxes will remain unchecked for the deleted character(s), untill you reload or logout/login",
+      type = "description",
+      order = -1
+    }
+  }
+
+  for k in pairs(xb.db.factionrealm) do
+    optTable[k]={
+      name = k,
+      width = "full",
+      type = "toggle",
+      get = function() return xb.db.factionrealm[k] ~= nil; end,
+      set = function(_,val) if not val and xb.db.factionrealm[k] ~= nil then xb.db.factionrealm[k] = nil; end end
+    }
+  end
+  return optTable;
+end
+
 function GoldModule:GetName()
   return BONUS_ROLL_REWARD_MONEY;
 end
@@ -94,7 +120,7 @@ end
 
 function GoldModule:OnEnable()
   if self.goldFrame == nil then
-    self.goldFrame = CreateFrame("FRAME", nil, xb:GetFrame('bar'))
+    self.goldFrame = CreateFrame("FRAME", "GoldFrame", xb:GetFrame('bar'))
     xb:RegisterFrame('goldFrame', self.goldFrame)
   end
   self.goldFrame:Show()
@@ -286,32 +312,6 @@ end
 function GoldModule:SeparateCoins(money)
   local gold, silver, copper = floor(abs(money / 10000)), floor(abs(mod(money / 100, 100))), floor(abs(mod(money, 100)))
   return gold, silver, copper
-end
-
-function listAllCharactersByFactionRealm()
-  local optTable = {
-    header = {
-      name = "|cff82c5ff"..xb.constants.playerFactionLocal.." "..xb.constants.playerRealm.."|r",
-      type = "header",
-      order = 0
-    },
-    footer = {
-      name = "All the characters listed above are currently registered in the gold database. To delete one or several character, plase uncheck the box correponding to the character(s) to delete.\nThe boxes will remain unchecked for the deleted character(s), untill you reload or logout/login",
-      type = "description",
-      order = -1
-    }
-  }
-
-  for k in pairs(xb.db.factionrealm) do
-    optTable[k]={
-      name = k,
-      width = "full",
-      type = "toggle",
-      get = function() return xb.db.factionrealm[k] ~= nil; end,
-      set = function(_,val) if not val and xb.db.factionrealm[k] ~= nil then xb.db.factionrealm[k] = nil; end end
-    }
-  end
-  return optTable;
 end
 
 function GoldModule:GetDefaultOptions()
