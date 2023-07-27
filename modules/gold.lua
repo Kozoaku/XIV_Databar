@@ -41,7 +41,7 @@ local function moneyWithTexture(amount, session)
     silver, copper = "00","00"
   end
 
-  amountStringTexture = GetCoinTextureString(amount..""..silver..""..copper)
+  local amountStringTexture = GetCoinTextureString(amount..""..silver..""..copper)
 
   if shortThousands then
     shortGold = shortenNumber(tonumber(amount))
