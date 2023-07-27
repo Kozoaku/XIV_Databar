@@ -1,3 +1,10 @@
+## [3.1.2-beta.3](https://github.com/Kozoaku/XIV_Databar/compare/v3.1.2-beta.2...v3.1.2-beta.3) (2023-07-27)
+
+
+### Bug Fixes
+
+* **Gold:** calculate daily total ([#78](https://github.com/Kozoaku/XIV_Databar/issues/78)) ([57684ed](https://github.com/Kozoaku/XIV_Databar/commit/57684ed2a9f49881b69c67c571afa2fdc1c7c615))
+
 ## [3.1.2-beta.2](https://github.com/Kozoaku/XIV_Databar/compare/v3.1.2-beta.1...v3.1.2-beta.2) (2023-07-20)
 
 
