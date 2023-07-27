@@ -5,9 +5,13 @@ local L = XIVBar.L;
 local GoldModule = xb:NewModule("GoldModule", 'AceEvent-3.0')
 
 local isSessionNegative, isDailyNegative = false, false
-local positiveSign = "|cff00ff00+ "
-local negativeSign = "|cffff0000- "
 
+---Return text string with suffix to indicate the number of digits.
+--   k - number of thousands
+--   M - number of millions
+--   B - number of billions 
+---@param num number
+---@return string text shortened text string with suffix
 local function shortenNumber(num)
   if num < 1000 then
     return tostring(num)
@@ -20,39 +24,29 @@ local function shortenNumber(num)
   end
 end
 
-local function moneyWithTexture(amount, session)
-  local copper, silver = 0, 0
-  local showSC = xb.db.profile.modules.gold.showSmallCoins
-  local shortThousands = xb.db.profile.modules.gold.shortThousands
-  local shortGold = ""
+---comment
+---@param amount number amount to turn into the textured string in copper
+---@param showSign boolean? show negative sign if amount is negative
+---@return string texturedString string with the approiate icons and textures
+local function moneyWithTexture(amount, showSign)
+  local negativeSign = "|cffff0000- "
 
-  amount, copper = math.modf(amount/100.0)
-  amount, silver = math.modf(amount/100.0)
-
-  silver = silver * 100
-  copper = copper * 100
-
-  silver = string.format("%02d",silver)
-  copper = string.format("%02d",copper)
-
-  amount = string.format("%.0f",amount)
-
-  if not showSC then
-    silver, copper = "00","00"
+  if not xb.db.profile.modules.gold.showSmallCoins then
+    amount = floor(amount / 1e4) * 1e4
   end
 
-  local amountStringTexture = GetCoinTextureString(amount..""..silver..""..copper)
+  local amountStringTexture = GetCoinTextureString(amount)
 
-  if shortThousands then
-    shortGold = shortenNumber(tonumber(amount))
-    amountStringTexture = amountStringTexture:gsub(amount.."|T",shortGold.."|T")
+  if xb.db.profile.modules.gold.shortThousands then
+    local shortGold = shortenNumber(amount)
+    amountStringTexture = gsub(amountStringTexture, amount.."|T", shortGold.."|T")
   end
 
-  if not session then
-    return amountStringTexture
-  else
-    return isSessionNegative and negativeSign..amountStringTexture or amountStringTexture
+  if showSign and amount < 0 then
+    amountStringTexture = negativeSign..amountStringTexture or amountStringTexture
   end
+  
+  return amountStringTexture
 end
 
 local function ConvertDateToNumber(month, day, year)
@@ -86,6 +80,14 @@ local function listAllCharactersByFactionRealm()
     }
   end
   return optTable;
+end
+
+local function GetFreeBagSpace()
+  local freeSpace = 0
+  for i = 0, 4 do
+    freeSpace = freeSpace + C_Container.GetContainerNumFreeSlots(i)
+  end
+  return freeSpace
 end
 
 function GoldModule:GetName()
@@ -149,12 +151,8 @@ function GoldModule:Refresh()
     self.goldText:SetFont(xb:GetFont(db.text.fontSize))
     self.goldText:SetText(self:FormatCoinText(GetMoney()))
     if db.modules.gold.showFreeBagSpace then
-      local freeSpace = 0
-      for i = 0, 4 do
-        freeSpace = freeSpace + C_Container.GetContainerNumFreeSlots(i)
-      end
       self.bagText:SetFont(xb:GetFont(db.text.fontSize))
-      self.bagText:SetText('('..tostring(freeSpace)..')')
+      self.bagText:SetText('('..tostring(GetFreeBagSpace())..')')
     end
     return
   end
@@ -172,13 +170,9 @@ function GoldModule:Refresh()
 
   local bagWidth = 0
   if db.modules.gold.showFreeBagSpace then
-    local freeSpace = 0
-    for i = 0, 4 do
-      freeSpace = freeSpace + C_Container.GetContainerNumFreeSlots(i)
-    end
     self.bagText:SetFont(xb:GetFont(db.text.fontSize))
     self.bagText:SetTextColor(xb:GetColor('normal'))
-    self.bagText:SetText('('..tostring(freeSpace)..')')
+    self.bagText:SetText('('..tostring(GetFreeBagSpace())..')')
     self.bagText:SetPoint('LEFT', self.goldText, 'RIGHT', 5, 0)
     bagWidth = self.bagText:GetStringWidth()
   else
@@ -237,12 +231,7 @@ function GoldModule:RegisterFrameEvents()
     local totalGold = 0
     for charName, goldData in pairs(xb.db.factionrealm) do
       local charClass = xb.db.factionrealm[charName].class
-      local cc_r, cc_g, cc_b = 1, 1, 1
-      if charClass then
-        cc_r = RAID_CLASS_COLORS[charClass].r
-        cc_g = RAID_CLASS_COLORS[charClass].g
-        cc_b = RAID_CLASS_COLORS[charClass].b
-      end
+      local cc_r, cc_g, cc_b = xb:GetClassColors() and 1, 1, 1
       GameTooltip:AddDoubleLine(charName, moneyWithTexture(goldData.currentMoney), cc_r, cc_g, cc_b, 1, 1, 1)
       totalGold = totalGold + goldData.currentMoney
     end
@@ -284,8 +273,8 @@ function GoldModule:PLAYER_MONEY()
   local tmpMoney = GetMoney()
   local moneyDiff = tmpMoney - curMoney
 
-  gdb.sessionMoney = gdb.sessionMoney + moneyDiff
-  gdb.dailyMoney = gdb.dailyMoney + moneyDiff
+  xb.db.factionrealm[xb.constants.playerName].sessionMoney = gdb.sessionMoney + moneyDiff
+  xb.db.factionrealm[xb.constants.playerName].dailyMoney = gdb.dailyMoney + moneyDiff
 
   isSessionNegative = gdb.sessionMoney < 0
   isDailyNegative = gdb.dailyMoney < 0
