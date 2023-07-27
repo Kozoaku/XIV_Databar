@@ -52,6 +52,9 @@ function MenuModule:OnInitialize()
     D3 = {
       text = 'Diablo 3'
     },
+    Fen = {
+      text = "Diablo IV"
+    },
     ANBS = {
       text = 'Diablo Immortal'
     },
