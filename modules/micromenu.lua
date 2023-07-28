@@ -347,7 +347,6 @@ function MenuModule:CreateFrames()
 
   if mm.help then
     self.frames.help = CreateFrame("BUTTON", "help", parentFrame)
-    parentFrame = self.frames.help
   else
     if self.frames.help then
       self.frames.help = nil
@@ -617,7 +616,7 @@ function MenuModule:SocialHover(hoverFunc)
           if tContains(clientsList, gameClient) or not xb.db.profile.modules.microMenu.hideAppContact then
             -- lineLeft displays status icon, bnet name and the friend's note
             local lineLeft = string.format("|T%s:16|t|cff82c5ff %s|r %s", statusIcon, friendAccInfo.accountName, note)
-            local lineRight = ''
+            local lineRight
 
             -- friend is not playing wow, format is "GameName [Icon]"
             if not isWoW then
