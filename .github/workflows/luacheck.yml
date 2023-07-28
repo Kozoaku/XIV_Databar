@@ -16,4 +16,4 @@ jobs:
       - name: Luacheck
         uses: nebularg/actions-luacheck@v1
         with:
-          config: https://raw.githubusercontent.com/Jayrgo/wow-luacheckrc/mainline/.luacheckrc
+          config: https://raw.githubusercontent.com/Kozoaku/wow-luacheckrc/mainline/.luacheckrc

@@ -1,5 +1,4 @@
-local addon, xb = ...
-local _G = _G;
+local xb = select(2, ...)
 local L = xb.L;
 
 local VolumeModule = xb:NewModule("VolumeModule", 'AceEvent-3.0')
@@ -52,12 +51,12 @@ function VolumeModule:CreateModuleFrame()
 	end
 
 	self.frame:SetPoint('LEFT', parentFrame, relativeAnchorPoint, xOffset, 0)
-	
+
 	self.icon = self.frame:CreateTexture(nil,"OVERLAY",nil,7)
 	self.icon:SetPoint("LEFT")
 	self.icon:SetTexture(xb.constants.mediaPath.."datatexts\\sound")
 	self.icon:SetVertexColor(xb:GetColor('normal'))
-	
+
 	self.text = self.frame:CreateFontString(nil, "OVERLAY")
 	self.text:SetFont(xb:GetFont(xb.db.profile.text.fontSize))
 	self.text:SetPoint("RIGHT", self.frame,2,0)
@@ -69,7 +68,7 @@ function VolumeModule:RegisterEvents()
 		if InCombatLockdown() then return end
 		self.icon:SetVertexColor(xb:GetColor('hover'))
 		self.text:SetTextColor(xb:GetColor('hover'))
-		
+
 		if xb.db.profile.general.barPosition == "TOP" then
 			GameTooltip:SetOwner(self.frame, "ANCHOR_BOTTOM")
 		else
@@ -81,31 +80,29 @@ function VolumeModule:RegisterEvents()
 		GameTooltip:AddDoubleLine("<"..L['Right-Click']..">", "|cffffffff"..BINDING_NAME_MASTERVOLUMEDOWN.."|r")
 		GameTooltip:Show()
 	end)
-	
-	self.frame:SetScript("OnClick", function(self, button, down)
-		local volume = tonumber(GetCVar("Sound_MasterVolume"));
-		
-		if button == "LeftButton" then
-		
-		SetCVar( "Sound_MasterVolume", volume + xb.db.profile.modules.MasterVolume.step);
 
+	self.frame:SetScript("OnClick", function(s, button, down)
+		local volume = tonumber(GetCVar("Sound_MasterVolume"));
+
+		if button == "LeftButton" then
+            SetCVar( "Sound_MasterVolume", volume + xb.db.profile.modules.MasterVolume.step);
 		elseif button == "RightButton" then
-		SetCVar( "Sound_MasterVolume", volume - xb.db.profile.modules.MasterVolume.step);
+            SetCVar( "Sound_MasterVolume", volume - xb.db.profile.modules.MasterVolume.step);
 		end
 		volume = tonumber(GetCVar("Sound_MasterVolume"));
 		if volume <=0 then SetCVar( "Sound_MasterVolume", 0); end
 		if volume >=1 then SetCVar( "Sound_MasterVolume", 1); end
 	end)
-	
+
 	self.frame:SetScript("OnLeave", function()
 		self.icon:SetVertexColor(xb:GetColor('normal'))
 		self.text:SetTextColor(xb:GetColor('inactive'))
 		GameTooltip:Hide();
 	end)
-	
+
 	self.frame:RegisterEvent("PLAYER_ENTERING_WORLD");
 	self.frame:RegisterEvent("CVAR_UPDATE");
-	self.frame:SetScript("OnEvent", function(self,event, ...)
+	self.frame:SetScript("OnEvent", function(s, event, ...)
 		VolumeModule:MasterVolume_Update_Value();
 	end)
 end
@@ -136,6 +133,12 @@ function VolumeModule:Refresh()
 	end
 end
 
+local function Update_MasterVolume()
+	if VolumeModule then
+	    VolumeModule:MasterVolume_Update_Value()
+	end
+end
+
 function VolumeModule:MasterVolume_Update_Value()
 	local volume = tonumber(GetCVar("Sound_MasterVolume"));
 	local volumePercent = (volume * 100);
@@ -147,8 +150,8 @@ function VolumeModule:MasterVolume_Update_Value()
 end
 
 function VolumeModule:Hooks()
-	hooksecurefunc("Sound_MasterVolumeUp", VolumeModule.MasterVolume_Update_Value)
-	hooksecurefunc("Sound_MasterVolumeDown", VolumeModule.MasterVolume_Update_Value)
+	hooksecurefunc("Sound_MasterVolumeUp", Update_MasterVolume)
+	hooksecurefunc("Sound_MasterVolumeDown", Update_MasterVolume)
 
 	hooksecurefunc("SetCVar", function(cvar, value)
 		if cvar == "Sound_MasterVolume" then
