@@ -1,5 +1,4 @@
 local AddOnName, XIVBar = ...;
-local _G = _G;
 local pairs, unpack, select = pairs, unpack, select
 LibStub("AceAddon-3.0"):NewAddon(XIVBar, AddOnName, "AceConsole-3.0", "AceEvent-3.0");
 local L = LibStub("AceLocale-3.0"):GetLocale(AddOnName, true);
