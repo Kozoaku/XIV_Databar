@@ -1,4 +1,4 @@
-local AddOnName, XIVBar = ...;
+local XIVBar = select(2, ...);
 local _G = _G;
 local xb = XIVBar;
 local L = XIVBar.L;
@@ -164,7 +164,6 @@ function MenuModule:Refresh()
 
   self.iconSize = xb:GetHeight()
 
-  local colors = xb.db.profile.color
   local totalWidth = 0;
   for name, frame in pairs(self.frames) do
     self:IconDefaults(name)
