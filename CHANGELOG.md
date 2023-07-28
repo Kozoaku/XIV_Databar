@@ -1,3 +1,10 @@
+## [3.1.2-beta.4](https://github.com/Kozoaku/XIV_Databar/compare/v3.1.2-beta.3...v3.1.2-beta.4) (2023-07-28)
+
+
+### Bug Fixes
+
+* **Micromenu:** add Diablo IV to client list ([#79](https://github.com/Kozoaku/XIV_Databar/issues/79)) ([e0ad3b8](https://github.com/Kozoaku/XIV_Databar/commit/e0ad3b85a0bc4998c4f3110a8c1bb8d703a51959))
+
 ## [3.1.2-beta.3](https://github.com/Kozoaku/XIV_Databar/compare/v3.1.2-beta.2...v3.1.2-beta.3) (2023-07-27)
 
 
