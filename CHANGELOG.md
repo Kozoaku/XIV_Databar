@@ -1,3 +1,10 @@
+## [3.1.2](https://github.com/Kozoaku/XIV_Databar/compare/v3.1.1...v3.1.2) (2023-07-28)
+
+
+### Bug Fixes
+
+* trigger release ([#80](https://github.com/Kozoaku/XIV_Databar/issues/80)) ([6196e7c](https://github.com/Kozoaku/XIV_Databar/commit/6196e7c89a227a849f41aa89f069463676d9e630)), closes [#73](https://github.com/Kozoaku/XIV_Databar/issues/73) [#73](https://github.com/Kozoaku/XIV_Databar/issues/73) [#76](https://github.com/Kozoaku/XIV_Databar/issues/76) [#76](https://github.com/Kozoaku/XIV_Databar/issues/76) [#78](https://github.com/Kozoaku/XIV_Databar/issues/78) [#78](https://github.com/Kozoaku/XIV_Databar/issues/78) [#79](https://github.com/Kozoaku/XIV_Databar/issues/79) [#79](https://github.com/Kozoaku/XIV_Databar/issues/79)
+
 ## [3.1.2-beta.4](https://github.com/Kozoaku/XIV_Databar/compare/v3.1.2-beta.3...v3.1.2-beta.4) (2023-07-28)
 
 
