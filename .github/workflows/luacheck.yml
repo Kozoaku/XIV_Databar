@@ -1,4 +1,5 @@
-name: Run Luacheck
+name: luacheck
+run-name: Run Luacheck
 
 on:
   pull_request:
@@ -16,4 +17,4 @@ jobs:
       - name: Luacheck
         uses: nebularg/actions-luacheck@v1
         with:
-          config: https://raw.githubusercontent.com/Jayrgo/wow-luacheckrc/mainline/.luacheckrc
+          config: https://raw.githubusercontent.com/Kozoaku/wow-luacheckrc/mainline/.luacheckrc

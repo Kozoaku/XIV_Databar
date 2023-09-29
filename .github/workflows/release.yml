@@ -1,42 +1,24 @@
-name: Create new version
+name: release
+run-name: Release downloadable package
 
 on:
   push:
-    branches: ['main', 'beta', 'alpha']
+    tags:
+      - '**'
 
 jobs:
-  luacheck:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Luacheck
-        continue-on-error: true
-        uses: nebularg/actions-luacheck@v1
-
-  release:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          persist-credentials: false
-      - name: Setup Node
-        uses: actions/setup-node@v3
+
+      - name: Package and release
+        uses: BigWigsMods/packager@v2
         with:
-          node-version: "lts/*"
-      - name: Install Semantic Release
-        run: |
-          npm install semantic-release @semantic-release/git @semantic-release/changelog -D
-      - name: Create new version
+          args: -S
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          GIT_AUTHOR_NAME: ${{ github.event.pusher.name }}
-          GIT_AUTHOR_EMAIL: ${{ github.event.pusher.email }}
-        run: |
-          npx semantic-release
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+          WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
