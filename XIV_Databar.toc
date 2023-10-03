@@ -15,7 +15,3 @@
 ## X-Wago-ID: VBNBX0Kx
 
 embeds.xml
-
-locales\locales.xml
-core.lua
-modules\load_modules.xml
