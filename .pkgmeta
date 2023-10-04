@@ -24,3 +24,6 @@ tools-used:
 
 ignore:
   - README.md
+  - "docs/*"
+  - .releaserc
+  - "*.json"
