@@ -1,3 +1,1 @@
 # Plugin API
-
-## NewPlugin
