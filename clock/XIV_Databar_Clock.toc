@@ -2,7 +2,7 @@
 ## Interface-Wrath: 30402
 ## Interface-Classic: 11404
 
-## Title: XIV_Databar
+## Title: XIV_Databar_Clock
 ## Author: @project-author@
 ## Version: @project-version@
 
