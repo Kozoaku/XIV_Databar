@@ -18,9 +18,21 @@ externals:
   Libs/AceLocale-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceLocale-3.0
   Libs/LibQTip-1.0: https://repos.curseforge.com/wow/libqtip-1-0
   Libs/LibSharedMedia-3.0: https://repos.curseforge.com/wow/libsharedmedia-3-0/trunk/LibSharedMedia-3.0
+  Libs/WagoAnalytics: https://github.com/wagoio/WagoAnalyticsShim.git
 
-tools-used:
-  - libdatabroker-1.1
+move-folders:
+  XIV_Databar/Armor: XIV_Databar_Armor
+  XIV_Databar/clock: XIV_Databar_Clock
+  XIV_Databar/currency: XIV_Databar_Currency
+  XIV_Databar/gold: XIV_Databar_Gold
+  XIV_Databar/micromenu: XIV_Databar_MicroMenu
+  XIV_Databar/system: XIV_Databar_System
+  XIV_Databar/talent: XIV_Databar_Talent
+  XIV_Databar/tradeskill: XIV_Databar_Tradeskill
+  XIV_Databar/travel: XIV_Databar_Travel
+  XIV_Databar/volume: XIV_Databar_Volume
 
 ignore:
   - README.md
+  - "docs/*"
+  - "*.json"

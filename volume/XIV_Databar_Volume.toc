@@ -2,13 +2,15 @@
 ## Interface-Wrath: 30402
 ## Interface-Classic: 11404
 
-## Title: XIV_Databar
+## Title: XIV_Databar_Volume
 ## Author: @project-author@
 ## Version: @project-version@
 
 ## Notes: Adds a databar by the request of |cffffffffu/sammojo|r on Reddit, Icons made by |cffffffffu/sammojo|r. Previously maintained by |cff00FF99Saxitoxin|r, |cffbbbbbbMille|r|cff990000XIV|r, |c03dbfcbbVicious|r, and now |cffbab86cKozoaku|r.
-## SavedVariables: XIVDatabarDB
+## SavedVariables: XIVDatabarVolumeDB
+## LoadOnDemand: 1
 
+## Dependencies: XIV_Databar
 ## OptionalDependencies: WagoAnalytics
 
 ## X-Website: https://github.com/@project-author@/XIV_Databar
@@ -18,5 +20,4 @@
 
 embeds.xml
 
-options.lua
 core.lua
