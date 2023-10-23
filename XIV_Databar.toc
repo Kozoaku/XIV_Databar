@@ -18,4 +18,5 @@
 
 embeds.xml
 
+options.lua
 core.lua
