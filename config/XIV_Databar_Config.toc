@@ -10,3 +10,6 @@
 ## X-Issues: https://github.com/@project-author@/XIV_Databar/issues
 
 ## X-Wago-ID: VBNBX0Kx
+
+embeds.xml
+core.lua
