@@ -15,3 +15,6 @@
 ## X-Wago-ID: VBNBX0Kx
 
 libs/WagoAnalytics/Shim.lua
+
+embeds.xml
+core.lua
