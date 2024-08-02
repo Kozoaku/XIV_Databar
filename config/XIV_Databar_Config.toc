@@ -1,0 +1,12 @@
+## Interface-Vanilla: 11503
+
+## Title: XIV_Databar_Config
+## Author: @project-author@
+## Version: @project-version@
+
+## Notes: Centralized configuration management addon for XIV_Databar and its modules
+
+## X-Website: https://github.com/@project-author@/XIV_Databar
+## X-Issues: https://github.com/@project-author@/XIV_Databar/issues
+
+## X-Wago-ID: VBNBX0Kx
